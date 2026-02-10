@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-primary: #C8983F;
+  --color-primary-dark: #A67C2E;
+  --color-primary-light: #D4AD5A;
+  --color-secondary: #2C2C2C;
+  --color-accent: #8B7355;
+  --color-background: #F5F0EA;
+  --color-background-warm: #EDE6DA;
+  --color-muted: #C4BAA8;
+  --color-muted-light: #D9D2C5;
+  --color-cream: #FAF7F2;
+  --color-charcoal: #3A3A3A;
+
+  /* Typography */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-secondary);
+  background-color: var(--color-background);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Custom Utilities */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+/* Selection Color */
+::selection {
+  background-color: var(--color-primary-light);
+  color: var(--color-secondary);
+}

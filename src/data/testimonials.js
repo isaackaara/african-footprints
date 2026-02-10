@@ -1,0 +1,55 @@
+export const testimonials = [
+  {
+    id: "testimonial-1",
+    name: "Swiss Traveler",
+    location: "Zurich, Switzerland",
+    rating: 5,
+    quote: "Charming cottages and excellent food.",
+    source: "TripAdvisor",
+    date: "January 2022",
+  },
+  {
+    id: "testimonial-2",
+    name: "complecz",
+    location: "TripAdvisor Reviewer",
+    rating: 5,
+    quote: "The food was excellent, the best we had.",
+    source: "TripAdvisor",
+    date: "November 2018",
+  },
+  {
+    id: "testimonial-3",
+    name: "Jumbo-7",
+    location: "Castlegar, Canada",
+    rating: 4,
+    quote: "A home from home with excellent food.",
+    source: "TripAdvisor",
+    date: "October 2018",
+  },
+  {
+    id: "testimonial-4",
+    name: "Safari Enthusiast",
+    location: "TripAdvisor Reviewer",
+    rating: 5,
+    quote: "Perfect base for Solio and Aberdare safaris.",
+    source: "TripAdvisor",
+    date: "2023",
+  },
+  {
+    id: "testimonial-5",
+    name: "Wanderlust Family",
+    location: "TripAdvisor Reviewer",
+    rating: 5,
+    quote: "Our kids absolutely loved the horses and dogs.",
+    source: "TripAdvisor",
+    date: "2024",
+  },
+];
+
+export const testimonialsMeta = {
+  platform: "TripAdvisor",
+  overallRating: 4.8,
+  totalReviews: 61,
+  ranking: "#1 Guest House in Nyeri",
+  profileUrl: "https://www.tripadvisor.com/",
+};

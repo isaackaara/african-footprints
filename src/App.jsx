@@ -16,11 +16,9 @@ import NotFound from './pages/NotFound'
 function App() {
   const location = useLocation()
 
-  // Treat all /safaris/* and /events/* routes as the same page for AnimatePresence
+  // Treat all /safaris/* routes as the same page for AnimatePresence
   const pageKey = location.pathname.startsWith('/safaris')
     ? '/safaris'
-    : location.pathname.startsWith('/events')
-    ? '/events'
     : location.pathname
 
   return (
@@ -32,7 +30,6 @@ function App() {
           <Route path="/safaris/:category" element={<Safaris />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/events" element={<Events />} />
-          <Route path="/events/:category" element={<Events />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/rates" element={<Rates />} />
           <Route path="/contact" element={<Contact />} />

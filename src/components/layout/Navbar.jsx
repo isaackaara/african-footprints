@@ -20,6 +20,7 @@ const navLinks = [
   },
   { label: 'Gallery', path: '/gallery' },
   { label: 'Rooms', path: '/rooms' },
+  { label: 'Events', path: '/events' },
   { label: 'Rates', path: '/rates' },
   { label: 'Contact', path: '/contact' },
 ];

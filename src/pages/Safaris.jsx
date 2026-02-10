@@ -312,7 +312,7 @@ const Safaris = () => {
       {/* Tab Navigation */}
       <section className="sticky top-0 z-30 bg-cream/95 backdrop-blur-sm border-b border-muted/30 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex overflow-x-auto no-scrollbar gap-2 py-4">
+          <div className="flex overflow-x-auto no-scrollbar gap-2 py-4 justify-center">
             {tabs.map((tab) => (
               <button
                 key={tab.id}

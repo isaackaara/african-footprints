@@ -11,7 +11,7 @@ const safaris = [
     description:
       'Explore one of Kenya\'s most renowned rhino conservancies, home to both black and white rhinos roaming freely across breathtaking highland plains.',
     image: '/images/solio-rhino.png',
-    link: '/safaris#solio',
+    link: '/safaris/day-trips',
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const safaris = [
     description:
       'Ride alongside giraffes, zebras, and antelope on a horseback safari through the stunning landscapes surrounding Mount Kenya and the Aberdare foothills.',
     image: '/images/horseback-safari.png',
-    link: '/safaris#horseback',
+    link: '/safaris/on-sandai',
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ const safaris = [
     description:
       'Venture north to discover unique wildlife found nowhere else in Kenya, from reticulated giraffes to Grevy\'s zebras in this rugged, beautiful reserve.',
     image: '/images/samburu-landscape.png',
-    link: '/safaris#samburu',
+    link: '/safaris/multi-day',
   },
 ];
 

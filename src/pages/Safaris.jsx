@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiClock, FiArrowRight, FiSend } from 'react-icons/fi';
+import { FiClock, FiArrowRight, FiSend, FiCheckCircle, FiX, FiDollarSign } from 'react-icons/fi';
 import { safaris, safariCategories } from '../data/safaris';
 import Button from '../components/ui/Button';
 
@@ -68,46 +68,125 @@ const safariImages = {
   'ten-day-package': '/images/hero-safari.png',
 };
 
-const SafariCard = ({ safari, index }) => {
+const SafariCard = ({ safari, index, isExpanded, onToggle }) => {
   return (
     <motion.div
       variants={cardVariants}
       layout
-      className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300"
+      className={`bg-white rounded-xl overflow-hidden shadow-sm transition-shadow duration-300 ${
+        isExpanded ? 'shadow-lg col-span-1 md:col-span-2 lg:col-span-3' : 'group hover:shadow-lg'
+      }`}
     >
-      {/* Placeholder image */}
-      <div className="relative aspect-[4/3] bg-muted rounded-t-xl overflow-hidden">
-        <img
-          src={safariImages[safari.id] || '/images/hero-safari.png'}
-          alt={safari.title}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-secondary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        {/* Duration badge */}
-        <div className="absolute top-4 left-4 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm text-secondary px-3 py-1.5 rounded-full text-xs font-semibold">
-          <FiClock className="w-3.5 h-3.5 text-primary" />
-          {safari.duration}
+      <div className={isExpanded ? 'lg:flex' : ''}>
+        {/* Image */}
+        <div className={`relative bg-muted overflow-hidden ${
+          isExpanded ? 'lg:w-1/2 aspect-[4/3] lg:aspect-auto lg:min-h-[400px]' : 'aspect-[4/3]'
+        }`}>
+          <img
+            src={safariImages[safari.id] || '/images/hero-safari.png'}
+            alt={safari.title}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          {!isExpanded && (
+            <div className="absolute inset-0 bg-gradient-to-t from-secondary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          )}
+          {/* Duration badge */}
+          <div className="absolute top-4 left-4 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm text-secondary px-3 py-1.5 rounded-full text-xs font-semibold">
+            <FiClock className="w-3.5 h-3.5 text-primary" />
+            {safari.duration}
+          </div>
+          {isExpanded && (
+            <button
+              onClick={onToggle}
+              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-secondary hover:text-primary transition-colors cursor-pointer"
+            >
+              <FiX className="w-5 h-5" />
+            </button>
+          )}
         </div>
-      </div>
 
-      {/* Content */}
-      <div className="p-6">
-        <h3 className="font-heading text-xl text-secondary mb-1 group-hover:text-primary transition-colors duration-300">
-          {safari.title}
-        </h3>
-        <p className="text-accent text-sm italic mb-3">{safari.subtitle}</p>
-        <p className="text-secondary/70 text-sm leading-relaxed line-clamp-3 mb-4">
-          {safari.description.slice(0, 150)}...
-        </p>
+        {/* Content */}
+        <div className={isExpanded ? 'lg:w-1/2 p-8 lg:p-10' : 'p-6'}>
+          <h3 className={`font-heading text-secondary ${
+            isExpanded ? 'text-2xl md:text-3xl mb-2' : 'text-xl mb-1 group-hover:text-primary transition-colors duration-300'
+          }`}>
+            {safari.title}
+          </h3>
+          <p className={`text-accent italic ${isExpanded ? 'text-base mb-4' : 'text-sm mb-3'}`}>
+            {safari.subtitle}
+          </p>
 
-        {/* Learn More link */}
-        <Link
-          to={`/safaris/${safari.slug}`}
-          className="inline-flex items-center gap-2 text-primary font-semibold text-sm uppercase tracking-wide hover:gap-3 transition-all duration-300"
-        >
-          Learn More
-          <FiArrowRight className="w-4 h-4" />
-        </Link>
+          {isExpanded ? (
+            <>
+              <p className="text-secondary/75 text-sm leading-relaxed mb-6">
+                {safari.description}
+              </p>
+
+              {/* Highlights */}
+              {safari.highlights && (
+                <div className="mb-6">
+                  <h4 className="font-heading text-lg text-secondary mb-3">Highlights</h4>
+                  <ul className="space-y-2">
+                    {safari.highlights.map((highlight, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-secondary/75">
+                        <FiCheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Included */}
+              {safari.included && (
+                <div className="mb-6">
+                  <h4 className="font-heading text-lg text-secondary mb-3">What's Included</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {safari.included.map((item, i) => (
+                      <span key={i} className="inline-flex items-center gap-1.5 bg-background-warm text-secondary/80 px-3 py-1.5 rounded-full text-xs font-medium">
+                        <FiCheckCircle className="w-3 h-3 text-primary" />
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Price hint */}
+              {safari.priceHint && (
+                <div className="flex items-center gap-2 mb-6 text-sm">
+                  <FiDollarSign className="w-4 h-4 text-primary" />
+                  <span className="text-secondary/80 font-medium">{safari.priceHint}</span>
+                </div>
+              )}
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button href="/contact" variant="primary" size="md">
+                  Make an Enquiry
+                </Button>
+                <button
+                  onClick={onToggle}
+                  className="inline-flex items-center justify-center gap-2 rounded border border-muted px-6 py-3 text-sm font-semibold uppercase tracking-widest text-secondary transition-colors duration-300 hover:border-primary hover:text-primary cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="text-secondary/70 text-sm leading-relaxed line-clamp-3 mb-4">
+                {safari.description.slice(0, 150)}...
+              </p>
+              <button
+                onClick={onToggle}
+                className="inline-flex items-center gap-2 text-primary font-semibold text-sm uppercase tracking-wide hover:gap-3 transition-all duration-300 cursor-pointer"
+              >
+                Learn More
+                <FiArrowRight className="w-4 h-4" />
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </motion.div>
   );
@@ -163,7 +242,24 @@ const TailorMadeSection = () => {
 };
 
 const Safaris = () => {
-  const [activeTab, setActiveTab] = useState('on-sandai');
+  const { category } = useParams();
+  const navigate = useNavigate();
+  const [expandedId, setExpandedId] = useState(null);
+
+  const validCategories = safariCategories.map((cat) => cat.id);
+  const activeTab = category && validCategories.includes(category)
+    ? category
+    : 'on-sandai';
+
+  const handleTabChange = (tabId) => {
+    setExpandedId(null);
+    navigate(`/safaris/${tabId}`, { replace: true });
+  };
+
+  // Sync if URL changes from outside (e.g. navbar dropdown)
+  useEffect(() => {
+    setExpandedId(null);
+  }, [category]);
 
   const filteredSafaris = safaris.filter(
     (safari) => safari.category === activeTab
@@ -220,7 +316,7 @@ const Safaris = () => {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => handleTabChange(tab.id)}
                 className={`whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold tracking-wide transition-all duration-300 cursor-pointer ${
                   activeTab === tab.id
                     ? 'bg-primary text-white shadow-md'
@@ -265,7 +361,15 @@ const Safaris = () => {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
               {filteredSafaris.map((safari, index) => (
-                <SafariCard key={safari.id} safari={safari} index={index} />
+                <SafariCard
+                  key={safari.id}
+                  safari={safari}
+                  index={index}
+                  isExpanded={expandedId === safari.id}
+                  onToggle={() =>
+                    setExpandedId(expandedId === safari.id ? null : safari.id)
+                  }
+                />
               ))}
             </motion.div>
           )}

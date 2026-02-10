@@ -15,12 +15,18 @@ import NotFound from './pages/NotFound'
 function App() {
   const location = useLocation()
 
+  // Treat all /safaris/* routes as the same page for AnimatePresence
+  const pageKey = location.pathname.startsWith('/safaris')
+    ? '/safaris'
+    : location.pathname
+
   return (
     <Layout>
       <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
+        <Routes location={location} key={pageKey}>
           <Route path="/" element={<Home />} />
           <Route path="/safaris" element={<Safaris />} />
+          <Route path="/safaris/:category" element={<Safaris />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/rates" element={<Rates />} />
